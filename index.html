@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Two Swans | Websites for Small Businesses</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1C1C1C",
+                        silver: "#9A9A9A",
+                        platinum: "#EAEAEA",
+                        divider: "#F0F0F0",
+                        surface: "#FFFFFF",
+                        "surface-muted": "#FAFAFA",
+                        "surface-warm": "#F7F5F4",
+                        "on-surface": "#1C1C1C",
+                        "on-surface-variant": "#6A6A6A",
+                        muted: "#9A9A9A",
+                        accent: "#F3E8EA",
+                        "accent-secondary": "#EADDE1"
+                    },
+                    fontFamily: {
+                        headline: ["Instrument Serif", "Playfair Display", "serif"],
+                        body: ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        soft: "0 24px 80px rgba(28, 28, 28, 0.04)"
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                @apply bg-surface text-on-surface font-body selection:bg-accent selection:text-primary;
+                -webkit-font-smoothing: antialiased;
+                line-height: 1.7;
+            }
+            h1, h2, h3, h4, h5 {
+                @apply font-headline;
+                font-weight: 400;
+                letter-spacing: -0.02em;
+                text-wrap: balance;
+            }
+            p, li {
+                text-wrap: pretty;
+            }
+        }
+
+        @layer components {
+            .section-shell {
+                @apply px-6 md:px-12 py-32 md:py-40;
+            }
+
+            .section-grid {
+                @apply max-w-7xl mx-auto;
+            }
+
+            .eyebrow {
+                @apply text-[11px] uppercase tracking-[0.32em] text-on-surface-variant font-semibold;
+            }
+
+            .soft-card {
+                @apply rounded-[2rem] border bg-white;
+                border-color: #EAEAEA;
+                background: rgba(243, 232, 234, 0.7);
+                box-shadow: 0 24px 80px rgba(28, 28, 28, 0.04);
+            }
+
+            .ghost-card {
+                @apply rounded-[2rem] border bg-white;
+                border-color: #EAEAEA;
+                background: rgba(243, 232, 234, 0.7);
+            }
+
+            .pill-link {
+                @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-[11px] uppercase tracking-[0.28em] font-semibold transition-all duration-500;
+            }
+
+            .primary-link {
+                background: #1C1C1C;
+                color: #FFFFFF;
+            }
+
+            .primary-link:hover {
+                background: #333333;
+            }
+
+            .secondary-link {
+                @apply border text-on-surface hover:bg-surface-muted;
+                border-color: #EAEAEA;
+                background: #FFFFFF;
+            }
+        }
+
+        .editorial-rule {
+            border-top: 1px solid #F0F0F0;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-tint {
+            filter: grayscale(100%);
+            transition: filter 700ms ease, transform 700ms ease, opacity 700ms ease;
+        }
+
+        .hero-visual {
+            position: relative;
+            isolation: isolate;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(247, 245, 244, 0.95) 100%);
+        }
+
+        .hero-visual::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.42) 100%);
+            z-index: 1;
+        }
+
+        .hero-swan-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            opacity: 0.72;
+            pointer-events: none;
+        }
+
+        .hero-swan-overlay svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-swan-stroke {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.55);
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .hero-swan-shadow {
+            fill: none;
+            stroke: rgba(28, 28, 28, 0.06);
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: blur(6px);
+        }
+
+        .hero-proof {
+            position: relative;
+            min-height: 34rem;
+        }
+
+        .proof-card {
+            position: absolute;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            background: rgba(243, 232, 234, 0.7);
+            border: 1px solid #EAEAEA;
+            box-shadow: 0 28px 90px rgba(28, 28, 28, 0.055);
+            animation: float-soft 16s ease-in-out infinite;
+        }
+
+        .proof-card-toned {
+            padding: 0.7rem;
+        }
+
+        .proof-card-toned > img,
+        .proof-card-toned .hero-visual {
+            border-radius: 1.08rem;
+        }
+
+        .proof-card-blush {
+            background: rgba(243, 232, 234, 0.7);
+            border-color: #EADDE1;
+        }
+
+        .proof-card-blush-alt {
+            background: rgba(234, 221, 225, 0.7);
+            border-color: #EADDE1;
+        }
+
+        .hero-copy {
+            align-self: end;
+            padding-bottom: 2.25rem;
+        }
+
+        .hero-mark {
+            display: inline-block;
+            padding: 0.04em 0.12em 0.08em;
+            background: #F3E8EA;
+        }
+
+        .hero-submark {
+            display: inline;
+            padding: 0.1rem 0.18rem 0.16rem;
+            background: #F3E8EA;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .proof-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.92) grayscale(0.08);
+        }
+
+        .proof-card-main {
+            inset: 10% 12% 2% 0;
+            z-index: 3;
+            animation-duration: 18s;
+        }
+
+        .proof-card-top {
+            top: 0;
+            right: 0;
+            width: 34%;
+            height: 34%;
+            z-index: 4;
+            animation-duration: 15s;
+            animation-delay: -3s;
+        }
+
+        .proof-card-mid {
+            right: 0;
+            bottom: 17%;
+            width: 28%;
+            height: 25%;
+            z-index: 5;
+            animation-duration: 17s;
+            animation-delay: -7s;
+        }
+
+        .proof-card-bottom {
+            left: 10%;
+            bottom: 0;
+            width: 28%;
+            height: 23%;
+            z-index: 2;
+            animation-duration: 19s;
+            animation-delay: -5s;
+        }
+
+        @keyframes float-soft {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .soft-card:hover .image-tint,
+        .ghost-card:hover .image-tint {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .proof-card {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<nav class="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-white/90 backdrop-blur-xl">
+<div class="mx-auto flex max-w-7xl items-center px-6 py-5 md:px-12">
+<a class="text-xl font-headline font-normal tracking-[-0.01em]" href="#top">Two Swans.</a>
+<div class="hidden items-center gap-7 pl-8 text-[11px] uppercase tracking-[0.28em] text-on-surface-variant md:flex">
+<a class="transition-colors hover:text-black" href="#approach">Approach</a>
+<a class="transition-colors hover:text-black" href="#example">Example</a>
+<a class="transition-colors hover:text-black" href="#contact">Start</a>
+</div>
+<a class="pill-link secondary-link ml-auto" href="#contact">Start a Project</a>
+</div>
+</nav>
+
+<main class="pt-28 md:pt-32" id="top">
+<section class="section-shell pb-32 pt-5 md:pb-40 md:pt-8">
+<div class="section-grid grid items-end gap-16 lg:min-h-[76vh] lg:grid-cols-12 lg:gap-24">
+<div class="hero-copy reveal lg:col-span-4 lg:col-start-4 lg:self-center">
+<div class="max-w-xl space-y-8 text-left">
+<h1 class="max-w-[14ch] text-5xl font-normal leading-[1.02] tracking-[-0.03em] md:text-7xl xl:text-[5.2rem]">
+<span class="hero-mark">Clearly expressed.</span>
+                    </h1>
+<p class="max-w-lg text-lg leading-[1.72] text-on-surface md:text-xl">
+<span class="hero-submark">I design and build websites that help small businesses get more clients.</span>
+                    </p>
+<div class="pt-2">
+<a class="pill-link primary-link" href="#example">View Example</a>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 lg:col-start-8 reveal">
+<div class="hero-proof">
+<div class="proof-card proof-card-main proof-card-toned proof-card-blush">
+<div class="hero-visual h-full w-full bg-surface-muted">
+<img alt="Homepage snapshot for cake studio project" class="image-tint h-full w-full object-cover opacity-95" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnEXM2x-Y308PoL1Ikikplo26y1mym29w-0URQorNMxY8ZZOSafc1WtXJSNZr7yXrlSnRE8C6rSBvVOJsDwP2m0TXAyr5U55XOrX5WedxnKx7GmLXWhLWDOFQ_vHu49HOAQDVFtXcpA626B7stE5kEjH773eEPK1zWqtpN8sO3M6oHfr6eKffEzbdE8U0vrxSItCsDbXwhvtUs2VcOvNUXU2ChZ5pbtIzqHMKnerTwb8uHay4nxgyxI1anBQ-G5oRBy9E2wOX1wPY"/>
+<div aria-hidden="true" class="hero-swan-overlay">
+<svg fill="none" viewBox="0 0 100 125" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="heroSwanTone" x1="50" x2="50" y1="0" y2="125">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0.46"/>
+<stop offset="1" stop-color="#E5E4E2" stop-opacity="0.18"/>
+</linearGradient>
+</defs>
+<rect fill="url(#heroSwanTone)" height="125" opacity="0.22" width="18" x="58" y="0"/>
+<rect fill="url(#heroSwanTone)" height="80" opacity="0.14" width="12" x="18" y="24"/>
+<path class="hero-swan-shadow" d="M25 87C20 71 24 54 36 44C47 35 53 22 50 10" stroke-width="6.5"/>
+<path class="hero-swan-shadow" d="M76 88C81 71 78 54 65 44C55 36 48 23 51 11" stroke-width="6.5"/>
+<path class="hero-swan-stroke" d="M25 87C20 71 24 54 36 44C47 35 53 22 50 10" stroke-width="1.35"/>
+<path class="hero-swan-stroke" d="M76 88C81 71 78 54 65 44C55 36 48 23 51 11" stroke-width="1.35"/>
+<path class="hero-swan-stroke" d="M33 92C43 84 56 84 67 92" opacity="0.72" stroke-width="0.95"/>
+<ellipse cx="39" cy="95" fill="#FFFFFF" fill-opacity="0.08" rx="14" ry="10"/>
+<ellipse cx="62" cy="95" fill="#FFFFFF" fill-opacity="0.08" rx="14" ry="10"/>
+</svg>
+</div>
+</div>
+</div>
+<div class="proof-card proof-card-top proof-card-toned proof-card-blush-alt">
+<img alt="Product grid website snapshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUDscW-3bVnGv1tqAUuYNNgtoale7wRNKLijy70lpdAk9_h_uEDtQ_j3KVyHTLDeAPRaQhF2adfH_AmjBs-ssYrCowYPdKeeLh8wpRSSMnJTD35y_IgSgmfgBDCEDrFAAOT-DUqVmFa5fbsBZ2Yp9Sn3uRs0FU-AWuP_dgNPWauKc5HEB0MZ8VTLCvk1Cxt4xNlpQbeR7XS5gXvr-Oumy-ul0qG8WkPOfm-sV74WkhCnzxdA3w5iurq6bbBJMLx_8GQ8kyIuWGGjE"/>
+</div>
+<div class="proof-card proof-card-mid">
+<img alt="Form and interaction snapshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIWxXZqNsJ3oGGKW0Ie24WCGJhPH_aeJ-TbLzBlYvDVOEOOIyhN2z3UDyVjRKyYP7xwaGj9z9wChfPo5o4p8MbDzGNNgkZHtwO5qy9YEz4y7-VUwVCsbRR1FSHgK1nVDLTIXz45ecB8G56ZPXD-fx8w0TO-8qqodQHRhlh-Svjg7Vdg4a_lhe7VN5Uy2Q8qh8agcWLzttCC_sLo5fS7yoZmnzuD3q1-TVf7OPOpIYwMAdbFKQyGA5n69I3oLCGcwXMbMqAcJMwMpU"/>
+</div>
+<div class="proof-card proof-card-bottom">
+<img alt="Secondary project snapshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx2lTihCOOjZiqDb-44fxckiKeq8ji1TkAd_CmNBPdLPjCWib-kaafF3WDeUE7Xv-D0WEed0BmQCcEfw5NcD4HsAi1s03bD0SeKESUOCUyWGHl1Yn4-c7D0yH2Iazl1yHBQ9Cq-ukZC5k1lk2Nct5m4leFTsr6jE_8ZvIzaOdfWOc8PxHZWul4I3q3MkcizVQtffAOCAEIi2t84Qz4OdSqmIkGk3ppXXHLLBcivMlplHxGLaJug7oeugu2EBH3AC8h4e0mRcPZuAQ"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section-shell editorial-rule" id="approach">
+<div class="section-grid grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
+<div class="lg:col-span-5 reveal">
+<div class="soft-card overflow-hidden p-4">
+<div class="aspect-[16/11] overflow-hidden rounded-[1.5rem] bg-surface-muted">
+<img alt="Editorial design direction" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx2lTihCOOjZiqDb-44fxckiKeq8ji1TkAd_CmNBPdLPjCWib-kaafF3WDeUE7Xv-D0WEed0BmQCcEfw5NcD4HsAi1s03bD0SeKESUOCUyWGHl1Yn4-c7D0yH2Iazl1yHBQ9Cq-ukZC5k1lk2Nct5m4leFTsr6jE_8ZvIzaOdfWOc8PxHZWul4I3q3MkcizVQtffAOCAEIi2t84Qz4OdSqmIkGk3ppXXHLLBcivMlplHxGLaJug7oeugu2EBH3AC8h4e0mRcPZuAQ"/>
+</div>
+</div>
+</div>
+<div class="space-y-10 lg:col-span-5 lg:col-start-8 reveal">
+<div class="space-y-5">
+<span class="eyebrow">My Value</span>
+<h2 class="text-4xl font-normal leading-[1.12] tracking-[-0.02em] md:text-6xl">I design with intention.</h2>
+<p class="max-w-lg text-lg leading-[1.75] text-on-surface-variant">
+                            Anyone can make something quickly. I work with structure, not guesswork.
+                        </p>
+</div>
+<div class="grid gap-4">
+<div class="ghost-card px-7 py-6">
+<h3 class="font-body text-lg leading-[1.75] tracking-normal text-on-surface-variant md:text-xl">What matters comes first</h3>
+</div>
+<div class="ghost-card px-7 py-6">
+<h3 class="font-body text-lg leading-[1.75] tracking-normal text-on-surface-variant md:text-xl">Clarity over decoration</h3>
+</div>
+<div class="ghost-card px-7 py-6">
+<h3 class="font-body text-lg leading-[1.75] tracking-normal text-on-surface-variant md:text-xl">Designed to guide people forward</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section-shell editorial-rule" id="example">
+<div class="section-grid grid items-start gap-16 lg:grid-cols-12 lg:gap-24">
+<div class="space-y-12 lg:col-span-5 reveal">
+<div class="space-y-5">
+<span class="eyebrow">Case Study</span>
+<h2 class="text-4xl font-normal leading-[1.12] tracking-[-0.02em] md:text-6xl">Example: Cake studio</h2>
+</div>
+<div class="space-y-6 text-base leading-[1.8] text-on-surface-variant md:text-lg">
+<p>From Instagram messages to a clear, structured site.</p>
+</div>
+<div class="ghost-card p-8 md:p-10">
+<ul class="space-y-4 text-base leading-[1.8] text-on-surface-variant">
+<li>Focused browsing</li>
+<li>Clear product choices</li>
+<li>Simple request flow</li>
+</ul>
+</div>
+<p class="max-w-md text-lg leading-[1.8] text-on-surface-variant">
+                        A small shift in structure - a big difference in how the business works.
+                    </p>
+</div>
+<div class="space-y-6 lg:col-span-7 reveal">
+<div class="soft-card overflow-hidden p-4">
+<div class="aspect-[16/11] overflow-hidden rounded-[1.5rem] bg-surface-muted">
+<img alt="Cake studio homepage direction" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnEXM2x-Y308PoL1Ikikplo26y1mym29w-0URQorNMxY8ZZOSafc1WtXJSNZr7yXrlSnRE8C6rSBvVOJsDwP2m0TXAyr5U55XOrX5WedxnKx7GmLXWhLWDOFQ_vHu49HOAQDVFtXcpA626B7stE5kEjH773eEPK1zWqtpN8sO3M6oHfr6eKffEzbdE8U0vrxSItCsDbXwhvtUs2VcOvNUXU2ChZ5pbtIzqHMKnerTwb8uHay4nxgyxI1anBQ-G5oRBy9E2wOX1wPY"/>
+</div>
+</div>
+<div class="grid gap-6 md:grid-cols-2">
+<div class="soft-card overflow-hidden p-4">
+<div class="aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-surface-muted">
+<img alt="Focused browsing layout" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUDscW-3bVnGv1tqAUuYNNgtoale7wRNKLijy70lpdAk9_h_uEDtQ_j3KVyHTLDeAPRaQhF2adfH_AmjBs-ssYrCowYPdKeeLh8wpRSSMnJTD35y_IgSgmfgBDCEDrFAAOT-DUqVmFa5fbsBZ2Yp9Sn3uRs0FU-AWuP_dgNPWauKc5HEB0MZ8VTLCvk1Cxt4xNlpQbeR7XS5gXvr-Oumy-ul0qG8WkPOfm-sV74WkhCnzxdA3w5iurq6bbBJMLx_8GQ8kyIuWGGjE"/>
+</div>
+</div>
+<div class="soft-card overflow-hidden p-4">
+<div class="aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-surface-muted">
+<img alt="Clear product presentation" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIWxXZqNsJ3oGGKW0Ie24WCGJhPH_aeJ-TbLzBlYvDVOEOOIyhN2z3UDyVjRKyYP7xwaGj9z9wChfPo5o4p8MbDzGNNgkZHtwO5qy9YEz4y7-VUwVCsbRR1FSHgK1nVDLTIXz45ecB8G56ZPXD-fx8w0TO-8qqodQHRhlh-Svjg7Vdg4a_lhe7VN5Uy2Q8qh8agcWLzttCC_sLo5fS7yoZmnzuD3q1-TVf7OPOpIYwMAdbFKQyGA5n69I3oLCGcwXMbMqAcJMwMpU"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section-shell editorial-rule" id="pricing">
+<div class="section-grid space-y-12">
+<div class="max-w-3xl space-y-6 reveal">
+<span class="eyebrow">Pricing</span>
+<h2 class="text-4xl font-normal leading-[1.12] tracking-[-0.02em] md:text-6xl">Simple, flexible</h2>
+</div>
+<div class="grid gap-6 lg:grid-cols-2 reveal">
+<div class="ghost-card p-10 md:p-12">
+<div class="space-y-6">
+<div class="space-y-3">
+<h3 class="text-3xl font-normal leading-[1.2] tracking-[-0.015em]">Start simple</h3>
+<p class="text-xl leading-relaxed text-on-surface-variant">From $900</p>
+</div>
+<p class="max-w-xs text-base leading-[1.8] text-on-surface-variant">
+                        A clear one-page start for a business that needs a stronger presence.
+                    </p>
+</div>
+</div>
+</div>
+<div class="ghost-card p-10 md:p-12">
+<div class="space-y-6">
+<div class="space-y-3">
+<h3 class="text-3xl font-normal leading-[1.2] tracking-[-0.015em]">Build properly</h3>
+<p class="text-xl leading-relaxed text-on-surface-variant">$1500 - $2500</p>
+</div>
+<p class="max-w-xs text-base leading-[1.8] text-on-surface-variant">
+                        A more complete website with clearer structure, flow, and presentation.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section-shell editorial-rule bg-white text-on-surface" id="contact">
+<div class="section-grid text-center">
+<div class="mx-auto max-w-3xl space-y-8 reveal">
+<span class="eyebrow">Final CTA</span>
+<h2 class="text-4xl font-normal leading-[1.1] tracking-[-0.02em] md:text-7xl">Have something in mind?</h2>
+<div class="pt-4">
+<a class="pill-link primary-link px-8 py-4" href="#top">Start a Project</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="border-t border-[rgba(28,28,28,0.18)]">
+<div class="h-24 bg-accent md:h-32"></div>
+<div class="bg-primary px-6 py-12 text-white md:px-12 md:py-16">
+<div class="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-end md:justify-between">
+<div class="space-y-3">
+<div class="text-2xl font-headline font-normal tracking-[-0.01em]">Two Swans.</div>
+<p class="max-w-md text-sm leading-relaxed text-white/70">
+                    Design and build for small businesses that want a calmer, clearer path from attention to inquiry.
+                </p>
+</div>
+<div class="text-[11px] uppercase tracking-[0.28em] text-white/60">
+                Calm, clear, built to convert
+            </div>
+</div>
+</div>
+</footer>
+
+<script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                }
+            });
+        }, {
+            threshold: 0.18
+        });
+
+        document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+    </script>
+</body>
+</html>
