@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Two Swans | Websites for Small Businesses</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -26,7 +26,7 @@
                         "accent-secondary": "#EADDE1"
                     },
                     fontFamily: {
-                        headline: ["Instrument Serif", "Playfair Display", "serif"],
+                        headline: ["Libre Caslon Display", "Playfair Display", "serif"],
                         body: ["Inter", "sans-serif"]
                     },
                     boxShadow: {
@@ -35,6 +35,9 @@
                 }
             }
         }
+    </script>
+<script>
+        document.documentElement.classList.add("motion-enabled");
     </script>
 <style type="text/tailwindcss">
         @layer base {
@@ -59,7 +62,7 @@
 
         @layer components {
             .section-shell {
-                @apply px-6 md:px-12 py-32 md:py-40;
+                @apply px-6 md:px-12 py-28 md:py-36;
             }
 
             .section-grid {
@@ -85,6 +88,9 @@
 
             .pill-link {
                 @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-[11px] uppercase tracking-[0.28em] font-semibold transition-all duration-500;
+                transition-property: transform, background-color, border-color, color, box-shadow;
+                transition-duration: 220ms;
+                transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
             }
 
             .primary-link {
@@ -101,27 +107,147 @@
                 border-color: #EAEAEA;
                 background: #FFFFFF;
             }
+
+            .brand-link {
+                position: relative;
+                display: inline-flex;
+                transition: color 220ms var(--motion-ease);
+            }
+
+            .brand-link::after {
+                content: "";
+                position: absolute;
+                left: -0.22rem;
+                right: -0.22rem;
+                bottom: -0.55rem;
+                height: 0.72rem;
+                opacity: 0;
+                transform: scaleX(0.4);
+                transform-origin: left center;
+                background: center / 100% 100% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 12' fill='none'%3E%3Cpath d='M2 7.4C16 3.5 32 3.2 70 7.4' stroke='%23EADDE1' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
+                transition: opacity 220ms var(--motion-ease), transform 220ms var(--motion-ease);
+                pointer-events: none;
+            }
+
+            .brand-link:hover,
+            .brand-link:focus-visible {
+                color: #1C1C1C;
+            }
+
+            .brand-link:hover::after,
+            .brand-link:focus-visible::after {
+                opacity: 0.72;
+                transform: scaleX(1);
+            }
+
+            .logo-highlight {
+                position: relative;
+                isolation: isolate;
+                display: inline-block;
+                color: #1C1C1C;
+                text-decoration: none;
+            }
+
+            .logo-highlight::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: #1C1C1C;
+                transform: translate(-0.18rem, 0.18rem);
+                z-index: 0;
+            }
+
+            .logo-highlight__front {
+                position: relative;
+                z-index: 1;
+                display: block;
+                padding: 0.04em 0.12em 0.08em;
+                background: #F3E8EA;
+            }
+
+            .hero-cta {
+                height: 54px;
+                padding: 0 2rem;
+                background: #1C1C1C;
+                color: #FFFFFF;
+                border: 1px solid #1C1C1C;
+            }
+
+            .hero-cta:hover {
+                background: #F3E8EA;
+                border-color: #EADDE1;
+                color: #1C1C1C;
+            }
+
+        }
+
+        :root {
+            --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --motion-duration: 620ms;
+            --motion-distance: 14px;
+            --motion-shadow: 0 30px 88px rgba(28, 28, 28, 0.08);
         }
 
         .editorial-rule {
             border-top: 1px solid #F0F0F0;
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+        .hero-headline,
+        .hero-subtext,
+        .hero-cta-row,
+        .hero-proof {
+            will-change: transform, opacity;
         }
 
-        .reveal.is-visible {
+        .hero-headline {
+            transition: opacity 600ms var(--motion-ease),
+                        transform 600ms var(--motion-ease);
+        }
+
+        .hero-subtext {
+            transition: opacity 600ms var(--motion-ease) 90ms,
+                        transform 600ms var(--motion-ease) 90ms,
+                        color 220ms var(--motion-ease);
+        }
+
+        .hero-cta-row {
+            transition: opacity 600ms var(--motion-ease) 180ms,
+                        transform 600ms var(--motion-ease) 180ms;
+        }
+
+        .hero-proof {
+            transition: opacity 640ms var(--motion-ease) 80ms,
+                        transform 640ms var(--motion-ease) 80ms;
+        }
+
+        .motion-enabled body.is-motion-ready:not(.is-loaded) .hero-headline,
+        .motion-enabled body.is-motion-ready:not(.is-loaded) .hero-subtext,
+        .motion-enabled body.is-motion-ready:not(.is-loaded) .hero-cta-row {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        .motion-enabled body.is-motion-ready:not(.is-loaded) .hero-proof {
+            opacity: 0;
+            transform: scale(0.985);
+        }
+
+        .reveal {
             opacity: 1;
             transform: translateY(0);
+            transition: opacity var(--motion-duration) var(--motion-ease),
+                        transform var(--motion-duration) var(--motion-ease);
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+
+        .motion-enabled body.is-motion-ready .reveal:not(.is-visible) {
+            opacity: 0;
+            transform: translateY(var(--motion-distance));
         }
 
         .image-tint {
             filter: grayscale(100%);
-            transition: filter 700ms ease, transform 700ms ease, opacity 700ms ease;
+            transition: filter 320ms var(--motion-ease), opacity 320ms var(--motion-ease);
         }
 
         .hero-visual {
@@ -138,47 +264,65 @@
             z-index: 1;
         }
 
-        .hero-swan-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            opacity: 0.72;
-            pointer-events: none;
-        }
-
-        .hero-swan-overlay svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .hero-swan-stroke {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.55);
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .hero-swan-shadow {
-            fill: none;
-            stroke: rgba(28, 28, 28, 0.06);
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            filter: blur(6px);
-        }
-
         .hero-proof {
             position: relative;
             min-height: 34rem;
         }
 
+        .signature-curve {
+            --curve-parallax: 0px;
+            position: absolute;
+            top: 0.4rem;
+            right: 0.2rem;
+            width: clamp(9rem, 24vw, 16rem);
+            height: calc(100% - 0.8rem);
+            z-index: 1;
+            opacity: 0.68;
+            pointer-events: none;
+            transform: translate3d(0, var(--curve-parallax), 0);
+            transition: opacity 360ms var(--motion-ease) 1.36s,
+                        transform 260ms var(--motion-ease);
+        }
+
+        .signature-curve svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .signature-curve-path {
+            fill: none;
+            stroke: #EADDE1;
+            stroke-width: 1.35;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
+            stroke-dasharray: 420;
+            stroke-dashoffset: 420;
+        }
+
+        .motion-enabled .signature-curve-path {
+            animation: draw-swan-line 1.55s var(--motion-ease) 180ms forwards;
+        }
+
+        .motion-enabled .signature-curve {
+            animation: settle-swan-line 400ms var(--motion-ease) 1.38s forwards;
+        }
+
         .proof-card {
+            --parallax-y: 0px;
+            --hover-lift: 0px;
             position: absolute;
             overflow: hidden;
             border-radius: 1.5rem;
             background: rgba(243, 232, 234, 0.7);
             border: 1px solid #EAEAEA;
             box-shadow: 0 28px 90px rgba(28, 28, 28, 0.055);
-            animation: float-soft 16s ease-in-out infinite;
+            transform: translate3d(0, calc(var(--parallax-y) + var(--hover-lift)), 0);
+            transition: transform 240ms var(--motion-ease),
+                        box-shadow 240ms var(--motion-ease),
+                        border-color 240ms var(--motion-ease);
+            will-change: transform, box-shadow;
         }
 
         .proof-card-toned {
@@ -203,20 +347,105 @@
         .hero-copy {
             align-self: end;
             padding-bottom: 2.25rem;
+            position: relative;
+            z-index: 3;
         }
 
-        .hero-mark {
-            display: inline-block;
-            padding: 0.04em 0.12em 0.08em;
-            background: #F3E8EA;
+        .hero-layout {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
         }
 
-        .hero-submark {
-            display: inline;
-            padding: 0.1rem 0.18rem 0.16rem;
-            background: #F3E8EA;
-            box-decoration-break: clone;
-            -webkit-box-decoration-break: clone;
+        .hero-copy-block {
+            max-width: 36rem;
+        }
+
+        .hero-subtext {
+            max-width: 35rem;
+            font-size: 1.22rem;
+            line-height: 1.92;
+            color: rgba(28, 28, 28, 0.82);
+        }
+
+        .hero-portrait-wrap {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 32rem;
+        }
+
+        .hero-portrait-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 12% 8% 6% 20%;
+            border-radius: 2.6rem;
+            background: linear-gradient(180deg, rgba(243, 232, 234, 0.3) 0%, rgba(234, 221, 225, 0.14) 100%);
+            z-index: 0;
+        }
+
+        .hero-portrait-frame {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 24rem);
+            padding: 0.85rem;
+            border-radius: 2.2rem;
+            border: 1px solid rgba(28, 28, 28, 0.14);
+            background: #FFFFFF;
+            box-shadow: 0 26px 78px rgba(28, 28, 28, 0.06);
+            transform: none;
+        }
+
+        .hero-portrait-inner {
+            position: relative;
+            aspect-ratio: 4 / 5.2;
+            overflow: hidden;
+            border-radius: 1.8rem;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(243, 232, 234, 0.9) 0%, rgba(243, 232, 234, 0) 34%),
+                linear-gradient(180deg, #F8F6F5 0%, #EEEAE7 100%);
+        }
+
+        .hero-portrait-inner::before {
+            content: "";
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            width: 34%;
+            height: 28%;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(28, 28, 28, 0.08) 0%, rgba(28, 28, 28, 0.16) 100%);
+            transform: translateX(-50%);
+        }
+
+        .hero-portrait-inner::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 74%;
+            height: 56%;
+            border-radius: 46% 46% 12% 12% / 28% 28% 10% 10%;
+            background: linear-gradient(180deg, rgba(28, 28, 28, 0.1) 0%, rgba(28, 28, 28, 0.18) 100%);
+            transform: translateX(-50%);
+        }
+
+        .hero-portrait-caption {
+            display: block;
+            padding: 1rem 0.55rem 0.15rem;
+            font-size: 0.72rem;
+            line-height: 1.4;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: rgba(28, 28, 28, 0.52);
+            text-align: center;
+        }
+
+        .hero-blend-shell {
+            position: relative;
+            z-index: 3;
+            padding-bottom: 7rem;
         }
 
         .proof-card img {
@@ -262,19 +491,51 @@
             animation-delay: -5s;
         }
 
-        @keyframes float-soft {
-            0%, 100% {
-                transform: translateY(0);
+        @keyframes draw-swan-line {
+            to {
+                stroke-dashoffset: 0;
             }
-            50% {
-                transform: translateY(-8px);
+        }
+
+        @keyframes settle-swan-line {
+            from {
+                opacity: 0.68;
             }
+            to {
+                opacity: 0.48;
+            }
+        }
+
+        .soft-card,
+        .ghost-card {
+            --hover-lift: 0px;
+            transform: translate3d(0, var(--hover-lift), 0);
+            transition: transform 240ms var(--motion-ease),
+                        box-shadow 240ms var(--motion-ease),
+                        border-color 240ms var(--motion-ease),
+                        background-color 240ms var(--motion-ease);
+            will-change: transform, box-shadow;
+        }
+
+        .pill-link:hover {
+            transform: translateY(-1px);
+        }
+
+        .pill-link:active {
+            transform: translateY(0) scale(0.98);
+            transition-duration: 100ms;
+        }
+
+        .soft-card:hover,
+        .ghost-card:hover,
+        .proof-card:hover {
+            --hover-lift: -4px;
+            box-shadow: var(--motion-shadow);
         }
 
         .soft-card:hover .image-tint,
         .ghost-card:hover .image-tint {
             filter: grayscale(0%);
-            transform: scale(1.02);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -282,14 +543,581 @@
                 scroll-behavior: auto;
             }
 
+            .hero-headline,
+            .hero-subtext,
+            .hero-cta-row,
+            .hero-proof,
             .reveal {
                 opacity: 1;
                 transform: none;
                 transition: none;
             }
 
+            .soft-card,
+            .ghost-card,
+            .proof-card,
+            .signature-curve,
+            .pill-link,
+            .image-tint {
+                transform: none !important;
+                transition: none !important;
+            }
+
+            .signature-curve,
+            .signature-curve-path {
+                animation: none !important;
+            }
+
+            .signature-curve {
+                opacity: 0.48;
+            }
+
+            .signature-curve-path {
+                stroke-dashoffset: 0;
+            }
+
             .proof-card {
                 animation: none;
+            }
+        }
+
+        /* ── Pricing 3-Column Grid ─────────────────────────────── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .pricing-card {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+            min-height: 24.5rem;
+            box-shadow: 0 18px 60px rgba(28, 28, 28, 0.03);
+        }
+
+        .pricing-card-label {
+            font-size: 0.66rem;
+            line-height: 1.3;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: rgba(28, 28, 28, 0.5);
+        }
+
+        .pricing-note-card {
+            background: linear-gradient(180deg, rgba(243, 232, 234, 0.78) 0%, rgba(234, 221, 225, 0.92) 100%);
+            border-color: #E6D8DC;
+            justify-content: space-between;
+        }
+
+        .pricing-price {
+            font-size: 0.92rem;
+            line-height: 1.4;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(28, 28, 28, 0.58);
+            font-weight: 600;
+        }
+
+        .pricing-body {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: #6A6A6A;
+            max-width: 18rem;
+        }
+
+        .pricing-feature-list {
+            margin-top: auto;
+            font-size: 0.96rem;
+            line-height: 1.85;
+            color: #6A6A6A;
+        }
+
+        .pricing-note-copy {
+            max-width: 16rem;
+        }
+
+        .pricing-card {
+            border-color: rgba(28, 28, 28, 0.16);
+        }
+
+        .pricing-card-entry {
+            background: #FFFFFF;
+            border-color: #1C1C1C;
+        }
+
+        .pricing-card-primary {
+            background: rgba(28, 28, 28, 0.9);
+            border-color: rgba(28, 28, 28, 0.92);
+            box-shadow: 0 26px 76px rgba(28, 28, 28, 0.14);
+        }
+
+        .pricing-card-primary h3 {
+            color: #F8F6F5;
+        }
+
+        .pricing-card-primary .pricing-card-label {
+            color: rgba(248, 246, 245, 0.7);
+        }
+
+        .pricing-card-primary .pricing-price {
+            color: rgba(248, 246, 245, 0.68);
+        }
+
+        .pricing-card-primary .pricing-body,
+        .pricing-card-primary .pricing-feature-list {
+            color: rgba(248, 246, 245, 0.82);
+        }
+
+        .pricing-card-primary:hover {
+            background: rgba(28, 28, 28, 0.96);
+        }
+
+        .pricing-card-support {
+            background: #FFFFFF;
+            border-color: #1C1C1C;
+        }
+
+        .pricing-card-cta {
+            align-self: flex-start;
+            margin-top: auto;
+            border: 1px solid #1C1C1C;
+            background: transparent;
+            color: #1C1C1C;
+        }
+
+        .pricing-card-primary .pricing-card-cta {
+            border-color: rgba(248, 246, 245, 0.76);
+            background: transparent;
+            color: #F8F6F5;
+        }
+
+        .pricing-card-primary .pricing-card-cta:hover {
+            background: rgba(248, 246, 245, 0.08);
+        }
+
+        .pricing-card-entry .pricing-card-cta,
+        .pricing-card-support .pricing-card-cta {
+            border-color: #1C1C1C;
+            background: transparent;
+            color: #1C1C1C;
+        }
+
+        .pricing-card-entry .pricing-card-cta:hover,
+        .pricing-card-support .pricing-card-cta:hover {
+            background: rgba(255, 255, 255, 0.72);
+            border-color: #1C1C1C;
+        }
+
+        .case-selection-shell {
+            padding-top: 8.75rem;
+            padding-bottom: 14.625rem;
+        }
+
+        .case-selection-shell-blend {
+            position: relative;
+            z-index: 2;
+            margin-top: 0;
+            padding-top: 8.75rem;
+        }
+
+        .case-selection-intro {
+            max-width: 48rem;
+        }
+
+        .case-selection-stage {
+            position: relative;
+            display: grid;
+            gap: 2.6rem;
+            align-items: start;
+            justify-items: center;
+            margin: 0 auto;
+            margin-top: 0.75rem;
+            padding-top: 1.25rem;
+            max-width: 94rem;
+            isolation: isolate;
+        }
+
+        .case-selection-card {
+            position: relative;
+            display: block;
+            width: min(100%, 24rem);
+            color: inherit;
+            text-decoration: none;
+            margin-top: var(--mobile-offset, 0px);
+        }
+
+        .motion-enabled body.is-motion-ready .case-selection-card.reveal:not(.is-visible) {
+            transform: translateY(10px);
+        }
+
+        .case-selection-card::before {
+            content: "";
+            position: absolute;
+            top: calc(-1 * var(--hanger-height, 1.8rem));
+            left: var(--anchor-left, 50%);
+            width: 1px;
+            height: var(--hanger-height, 1.8rem);
+            background: rgba(28, 28, 28, 0.18);
+            transform: translateX(-50%);
+        }
+
+        .case-selection-card::after {
+            content: "";
+            position: absolute;
+            top: calc(-1 * var(--hanger-height, 1.8rem) - 0.42rem);
+            left: var(--anchor-left, 50%);
+            width: 2.5rem;
+            height: 0.72rem;
+            border-radius: 999px;
+            border: 1px solid rgba(28, 28, 28, 0.16);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 10px 22px rgba(28, 28, 28, 0.04);
+            transform: translateX(-50%);
+        }
+
+        .case-selection-card__frame {
+            border-radius: 2rem;
+            padding: 0.72rem;
+            border: 1px solid rgba(234, 234, 234, 0.92);
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: 0 22px 70px rgba(28, 28, 28, 0.045);
+            transform: translateY(0);
+            transition: transform 240ms var(--motion-ease),
+                        box-shadow 240ms var(--motion-ease),
+                        border-color 240ms var(--motion-ease),
+                        background-color 240ms var(--motion-ease);
+        }
+
+        .case-selection-card-blush .case-selection-card__frame {
+            background: rgba(243, 232, 234, 0.82);
+            border-color: #EADDE1;
+        }
+
+        .case-selection-card-paper .case-selection-card__frame {
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .case-selection-card__media {
+            overflow: hidden;
+            border-radius: 1.45rem;
+            background: #F7F5F4;
+            aspect-ratio: var(--card-ratio, 4 / 5);
+        }
+
+        .case-selection-card__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(1) contrast(1.02);
+            transition: transform 240ms var(--motion-ease),
+                        filter 240ms var(--motion-ease);
+        }
+
+        .case-selection-card__meta {
+            display: grid;
+            gap: 0.38rem;
+            padding: 1rem 0.2rem 0;
+        }
+
+        .case-selection-card__eyebrow {
+            font-size: 0.63rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(28, 28, 28, 0.46);
+        }
+
+        .case-selection-card__title {
+            font-size: 1.02rem;
+            line-height: 1.48;
+            color: #1C1C1C;
+        }
+
+        .case-selection-card__cta {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(28, 28, 28, 0.58);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 220ms var(--motion-ease),
+                        transform 220ms var(--motion-ease),
+                        color 220ms var(--motion-ease);
+        }
+
+        .case-selection-card:hover .case-selection-card__frame,
+        .case-selection-card:focus-visible .case-selection-card__frame {
+            transform: translateY(-4px);
+            box-shadow: 0 28px 82px rgba(28, 28, 28, 0.08);
+        }
+
+        .case-selection-card:hover .case-selection-card__media img,
+        .case-selection-card:focus-visible .case-selection-card__media img {
+            filter: saturate(1.06) contrast(1.04);
+            transform: translateY(-1px);
+        }
+
+        .case-selection-card:hover .case-selection-card__cta,
+        .case-selection-card:focus-visible .case-selection-card__cta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .case-selection-card-hero {
+            z-index: 2;
+        }
+
+        .brand-story-shell {
+            position: relative;
+            overflow: hidden;
+            background: #FBFBFD;
+            padding-top: 6rem;
+            padding-bottom: 7rem;
+        }
+
+        .brand-story-backdrop {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .brand-story-accent {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 54%;
+            bottom: 0;
+            opacity: 1;
+            border-radius: 0;
+            background:
+                radial-gradient(circle at 22% 30%, rgba(237, 129, 151, 0.88) 0%, rgba(237, 129, 151, 0.52) 20%, rgba(237, 129, 151, 0) 54%),
+                radial-gradient(circle at 50% 72%, rgba(255, 199, 88, 0.88) 0%, rgba(255, 199, 88, 0.48) 18%, rgba(255, 199, 88, 0) 44%),
+                radial-gradient(circle at 92% 54%, rgba(117, 212, 236, 0.82) 0%, rgba(117, 212, 236, 0.46) 18%, rgba(117, 212, 236, 0) 42%),
+                linear-gradient(135deg, rgba(245, 167, 181, 0.82) 0%, rgba(255, 219, 154, 0.78) 52%, rgba(160, 223, 238, 0.8) 100%);
+            filter: none;
+        }
+
+        .brand-story-orb {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(110px);
+            opacity: 0.22;
+        }
+
+        .brand-story-orb-1 {
+            width: 28rem;
+            height: 28rem;
+            top: -8rem;
+            left: -7rem;
+            background: rgba(243, 232, 234, 0.95);
+        }
+
+        .brand-story-orb-2 {
+            width: 24rem;
+            height: 24rem;
+            right: -6rem;
+            bottom: 8%;
+            background: rgba(192, 212, 220, 0.85);
+        }
+
+        .brand-story-orb-3 {
+            width: 18rem;
+            height: 18rem;
+            top: 34%;
+            left: 46%;
+            background: rgba(228, 220, 199, 0.7);
+        }
+
+        .brand-story-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .brand-story-panel {
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.58);
+            box-shadow: 0 22px 52px rgba(28, 28, 28, 0.05);
+            backdrop-filter: blur(34px);
+            -webkit-backdrop-filter: blur(34px);
+        }
+
+        .brand-story-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2rem;
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            background: #1C1C1C;
+            font-size: 0.66rem;
+            line-height: 1;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .brand-story-title {
+            font-size: clamp(3.4rem, 7vw, 6.4rem);
+            line-height: 0.92;
+            letter-spacing: -0.03em;
+            color: #0A0A0A;
+        }
+
+        .brand-story-title span {
+            color: rgba(28, 28, 28, 0.45);
+            font-style: italic;
+        }
+
+        .brand-story-copy {
+            max-width: 31rem;
+            display: grid;
+            gap: 1.25rem;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: #1D1D1F;
+        }
+
+        .brand-story-copy p:last-child {
+            color: #6A6A6A;
+        }
+
+        .brand-story-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding-bottom: 0.18rem;
+            border-bottom: 1px solid rgba(28, 28, 28, 0.18);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #0A0A0A;
+            text-decoration: none;
+            transition: border-color 220ms var(--motion-ease), gap 220ms var(--motion-ease);
+        }
+
+        .brand-story-link:hover,
+        .brand-story-link:focus-visible {
+            border-color: rgba(28, 28, 28, 0.78);
+            gap: 0.95rem;
+        }
+
+        .brand-story-gallery {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .brand-story-media {
+            overflow: hidden;
+            border-radius: 1.15rem;
+            box-shadow: 0 20px 44px rgba(28, 28, 28, 0.05);
+        }
+
+        .brand-story-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 700ms ease-out;
+        }
+
+        .brand-story-media:hover img,
+        .brand-story-media:focus-within img {
+            transform: scale(1.04);
+        }
+
+        @media (min-width: 1024px) {
+            .brand-story-grid {
+                grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+                gap: 5rem;
+            }
+
+            .brand-story-gallery {
+                gap: 3rem;
+                padding-top: 2rem;
+            }
+
+            .brand-story-media-offset {
+                width: 82%;
+                margin-left: auto;
+            }
+
+            .brand-story-media-tall {
+                width: 76%;
+            }
+
+            .brand-story-accent {
+                left: 0;
+                right: -4%;
+                top: 52%;
+                bottom: 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-blend-shell {
+                min-height: 80vh;
+                padding-bottom: 8rem;
+            }
+
+            .case-selection-stage {
+                min-height: 38rem;
+                padding-top: 0;
+            }
+
+            .case-selection-card {
+                position: absolute;
+                top: var(--card-top);
+                left: var(--card-left);
+                width: var(--card-width);
+                margin-top: 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .hero-subtext {
+                font-size: 1.35rem;
+                max-width: 38rem;
+            }
+
+            .hero-layout {
+                grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.75fr);
+                gap: 4rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-blend-shell {
+                padding-bottom: 8rem;
+            }
+
+        }
+
+        /* Tablet: 2 columns */
+        @media (max-width: 1023px) and (min-width: 640px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* Mobile: 1 column */
+        @media (max-width: 639px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card {
+                min-height: auto;
             }
         }
     </style>
@@ -297,187 +1125,213 @@
 <body class="overflow-x-hidden">
 <nav class="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-white/90 backdrop-blur-xl">
 <div class="mx-auto flex max-w-7xl items-center px-6 py-5 md:px-12">
-<a class="text-xl font-headline font-normal tracking-[-0.01em]" href="#top">Two Swans.</a>
+<a class="logo-highlight text-xl font-headline font-normal tracking-[-0.01em]" href="#top"><span class="logo-highlight__front">Two Swans.</span></a>
 <div class="hidden items-center gap-7 pl-8 text-[11px] uppercase tracking-[0.28em] text-on-surface-variant md:flex">
-<a class="transition-colors hover:text-black" href="#approach">Approach</a>
-<a class="transition-colors hover:text-black" href="#example">Example</a>
-<a class="transition-colors hover:text-black" href="#contact">Start</a>
+<a class="brand-link" href="#example">Example</a>
+<a class="brand-link" href="#contact">Start</a>
 </div>
 <a class="pill-link secondary-link ml-auto" href="#contact">Start a Project</a>
 </div>
 </nav>
 
 <main class="pt-28 md:pt-32" id="top">
-<section class="section-shell pb-32 pt-5 md:pb-40 md:pt-8">
-<div class="section-grid grid items-end gap-16 lg:min-h-[76vh] lg:grid-cols-12 lg:gap-24">
-<div class="hero-copy reveal lg:col-span-4 lg:col-start-4 lg:self-center">
-<div class="max-w-xl space-y-8 text-left">
-<h1 class="max-w-[14ch] text-5xl font-normal leading-[1.02] tracking-[-0.03em] md:text-7xl xl:text-[5.2rem]">
-<span class="hero-mark">Clearly expressed.</span>
+<section class="section-shell hero-blend-shell px-0 pb-20 pt-4 md:pb-28 md:pt-6">
+<div class="mx-auto max-w-7xl px-6 md:px-12">
+<div class="hero-layout">
+<div class="hero-copy hero-copy-block lg:self-center">
+<div class="space-y-10 text-left">
+<h1 class="hero-headline text-[2.9rem] font-normal leading-[1.01] tracking-[-0.028em] md:text-7xl xl:text-[5.2rem]">
+You need a website
                     </h1>
-<p class="max-w-lg text-lg leading-[1.72] text-on-surface md:text-xl">
-<span class="hero-submark">I design and build websites that help small businesses get more clients.</span>
-                    </p>
-<div class="pt-2">
-<a class="pill-link primary-link" href="#example">View Example</a>
+<p class="hero-subtext">
+The one that looks good and is easy to use.<br/>
+shows the best of your product to your clients.
+</p>
+<div class="hero-cta-row flex justify-start pt-1">
+<a class="pill-link hero-cta" href="#example">My Work Samples</a>
 </div>
 </div>
 </div>
-<div class="lg:col-span-5 lg:col-start-8 reveal">
-<div class="hero-proof">
-<div class="proof-card proof-card-main proof-card-toned proof-card-blush">
-<div class="hero-visual h-full w-full bg-surface-muted">
-<img alt="Homepage snapshot for cake studio project" class="image-tint h-full w-full object-cover opacity-95" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnEXM2x-Y308PoL1Ikikplo26y1mym29w-0URQorNMxY8ZZOSafc1WtXJSNZr7yXrlSnRE8C6rSBvVOJsDwP2m0TXAyr5U55XOrX5WedxnKx7GmLXWhLWDOFQ_vHu49HOAQDVFtXcpA626B7stE5kEjH773eEPK1zWqtpN8sO3M6oHfr6eKffEzbdE8U0vrxSItCsDbXwhvtUs2VcOvNUXU2ChZ5pbtIzqHMKnerTwb8uHay4nxgyxI1anBQ-G5oRBy9E2wOX1wPY"/>
-<div aria-hidden="true" class="hero-swan-overlay">
-<svg fill="none" viewBox="0 0 100 125" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="heroSwanTone" x1="50" x2="50" y1="0" y2="125">
-<stop offset="0" stop-color="#FFFFFF" stop-opacity="0.46"/>
-<stop offset="1" stop-color="#E5E4E2" stop-opacity="0.18"/>
-</linearGradient>
-</defs>
-<rect fill="url(#heroSwanTone)" height="125" opacity="0.22" width="18" x="58" y="0"/>
-<rect fill="url(#heroSwanTone)" height="80" opacity="0.14" width="12" x="18" y="24"/>
-<path class="hero-swan-shadow" d="M25 87C20 71 24 54 36 44C47 35 53 22 50 10" stroke-width="6.5"/>
-<path class="hero-swan-shadow" d="M76 88C81 71 78 54 65 44C55 36 48 23 51 11" stroke-width="6.5"/>
-<path class="hero-swan-stroke" d="M25 87C20 71 24 54 36 44C47 35 53 22 50 10" stroke-width="1.35"/>
-<path class="hero-swan-stroke" d="M76 88C81 71 78 54 65 44C55 36 48 23 51 11" stroke-width="1.35"/>
-<path class="hero-swan-stroke" d="M33 92C43 84 56 84 67 92" opacity="0.72" stroke-width="0.95"/>
-<ellipse cx="39" cy="95" fill="#FFFFFF" fill-opacity="0.08" rx="14" ry="10"/>
-<ellipse cx="62" cy="95" fill="#FFFFFF" fill-opacity="0.08" rx="14" ry="10"/>
-</svg>
-</div>
-</div>
-</div>
-<div class="proof-card proof-card-top proof-card-toned proof-card-blush-alt">
-<img alt="Product grid website snapshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUDscW-3bVnGv1tqAUuYNNgtoale7wRNKLijy70lpdAk9_h_uEDtQ_j3KVyHTLDeAPRaQhF2adfH_AmjBs-ssYrCowYPdKeeLh8wpRSSMnJTD35y_IgSgmfgBDCEDrFAAOT-DUqVmFa5fbsBZ2Yp9Sn3uRs0FU-AWuP_dgNPWauKc5HEB0MZ8VTLCvk1Cxt4xNlpQbeR7XS5gXvr-Oumy-ul0qG8WkPOfm-sV74WkhCnzxdA3w5iurq6bbBJMLx_8GQ8kyIuWGGjE"/>
-</div>
-<div class="proof-card proof-card-mid">
-<img alt="Form and interaction snapshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIWxXZqNsJ3oGGKW0Ie24WCGJhPH_aeJ-TbLzBlYvDVOEOOIyhN2z3UDyVjRKyYP7xwaGj9z9wChfPo5o4p8MbDzGNNgkZHtwO5qy9YEz4y7-VUwVCsbRR1FSHgK1nVDLTIXz45ecB8G56ZPXD-fx8w0TO-8qqodQHRhlh-Svjg7Vdg4a_lhe7VN5Uy2Q8qh8agcWLzttCC_sLo5fS7yoZmnzuD3q1-TVf7OPOpIYwMAdbFKQyGA5n69I3oLCGcwXMbMqAcJMwMpU"/>
-</div>
-<div class="proof-card proof-card-bottom">
-<img alt="Secondary project snapshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx2lTihCOOjZiqDb-44fxckiKeq8ji1TkAd_CmNBPdLPjCWib-kaafF3WDeUE7Xv-D0WEed0BmQCcEfw5NcD4HsAi1s03bD0SeKESUOCUyWGHl1Yn4-c7D0yH2Iazl1yHBQ9Cq-ukZC5k1lk2Nct5m4leFTsr6jE_8ZvIzaOdfWOc8PxHZWul4I3q3MkcizVQtffAOCAEIi2t84Qz4OdSqmIkGk3ppXXHLLBcivMlplHxGLaJug7oeugu2EBH3AC8h4e0mRcPZuAQ"/>
+<div class="hero-portrait-wrap reveal" style="--reveal-delay: 120ms;">
+<div class="hero-portrait-frame">
+<div aria-label="Portrait placeholder" class="hero-portrait-inner" role="img"></div>
+<span class="hero-portrait-caption">Portrait Placeholder</span>
 </div>
 </div>
 </div>
 </div>
 </section>
 
-<section class="section-shell editorial-rule" id="approach">
-<div class="section-grid grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
-<div class="lg:col-span-5 reveal">
-<div class="soft-card overflow-hidden p-4">
-<div class="aspect-[16/11] overflow-hidden rounded-[1.5rem] bg-surface-muted">
-<img alt="Editorial design direction" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx2lTihCOOjZiqDb-44fxckiKeq8ji1TkAd_CmNBPdLPjCWib-kaafF3WDeUE7Xv-D0WEed0BmQCcEfw5NcD4HsAi1s03bD0SeKESUOCUyWGHl1Yn4-c7D0yH2Iazl1yHBQ9Cq-ukZC5k1lk2Nct5m4leFTsr6jE_8ZvIzaOdfWOc8PxHZWul4I3q3MkcizVQtffAOCAEIi2t84Qz4OdSqmIkGk3ppXXHLLBcivMlplHxGLaJug7oeugu2EBH3AC8h4e0mRcPZuAQ"/>
+<section class="section-shell case-selection-shell case-selection-shell-blend" id="example">
+<div class="case-selection-stage">
+<a aria-label="View product-first direction" class="case-selection-card case-selection-card-blush reveal" href="#contact" style="--card-left: 7%; --card-top: 10.8rem; --card-width: 18.5%; --hanger-height: 4.9rem; --anchor-left: 50%; --mobile-offset: 0rem; --reveal-delay: 90ms;">
+<div class="case-selection-card__frame">
+<div class="case-selection-card__media" style="--card-ratio: 4 / 5;">
+<img alt="Soft retail website direction preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUDscW-3bVnGv1tqAUuYNNgtoale7wRNKLijy70lpdAk9_h_uEDtQ_j3KVyHTLDeAPRaQhF2adfH_AmjBs-ssYrCowYPdKeeLh8wpRSSMnJTD35y_IgSgmfgBDCEDrFAAOT-DUqVmFa5fbsBZ2Yp9Sn3uRs0FU-AWuP_dgNPWauKc5HEB0MZ8VTLCvk1Cxt4xNlpQbeR7XS5gXvr-Oumy-ul0qG8WkPOfm-sV74WkhCnzxdA3w5iurq6bbBJMLx_8GQ8kyIuWGGjE"/>
 </div>
 </div>
+<div class="case-selection-card__meta">
+<span class="case-selection-card__eyebrow">Soft Retail</span>
+<span class="case-selection-card__title">Product-first and polished</span>
+<span class="case-selection-card__cta">View direction</span>
 </div>
-<div class="space-y-10 lg:col-span-5 lg:col-start-8 reveal">
-<div class="space-y-5">
-<span class="eyebrow">My Value</span>
-<h2 class="text-4xl font-normal leading-[1.12] tracking-[-0.02em] md:text-6xl">I design with intention.</h2>
-<p class="max-w-lg text-lg leading-[1.75] text-on-surface-variant">
-                            Anyone can make something quickly. I work with structure, not guesswork.
-                        </p>
+</a>
+
+<a aria-label="View warm editorial direction" class="case-selection-card case-selection-card-blush case-selection-card-hero reveal" href="#contact" style="--card-left: 32%; --card-top: 8.9rem; --card-width: 36%; --hanger-height: 3.8rem; --anchor-left: 50%; --mobile-offset: 0.8rem; --reveal-delay: 150ms;">
+<div class="case-selection-card__frame">
+<div class="case-selection-card__media" style="--card-ratio: 4 / 3;">
+<img alt="Neutral grey editorial website direction preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx2lTihCOOjZiqDb-44fxckiKeq8ji1TkAd_CmNBPdLPjCWib-kaafF3WDeUE7Xv-D0WEed0BmQCcEfw5NcD4HsAi1s03bD0SeKESUOCUyWGHl1Yn4-c7D0yH2Iazl1yHBQ9Cq-ukZC5k1lk2Nct5m4leFTsr6jE_8ZvIzaOdfWOc8PxHZWul4I3q3MkcizVQtffAOCAEIi2t84Qz4OdSqmIkGk3ppXXHLLBcivMlplHxGLaJug7oeugu2EBH3AC8h4e0mRcPZuAQ"/>
 </div>
-<div class="grid gap-4">
-<div class="ghost-card px-7 py-6">
-<h3 class="font-body text-lg leading-[1.75] tracking-normal text-on-surface-variant md:text-xl">What matters comes first</h3>
 </div>
-<div class="ghost-card px-7 py-6">
-<h3 class="font-body text-lg leading-[1.75] tracking-normal text-on-surface-variant md:text-xl">Clarity over decoration</h3>
+<div class="case-selection-card__meta">
+<span class="case-selection-card__eyebrow">Warm Editorial</span>
+<span class="case-selection-card__title">Atmosphere, appetite, and easy browsing</span>
+<span class="case-selection-card__cta">See demo</span>
 </div>
-<div class="ghost-card px-7 py-6">
-<h3 class="font-body text-lg leading-[1.75] tracking-normal text-on-surface-variant md:text-xl">Designed to guide people forward</h3>
+</a>
+
+<a aria-label="View modern service direction" class="case-selection-card case-selection-card-paper reveal" href="#contact" style="--card-left: 74.5%; --card-top: 10.4rem; --card-width: 18.5%; --hanger-height: 5rem; --anchor-left: 50%; --mobile-offset: 1.6rem; --reveal-delay: 210ms;">
+<div class="case-selection-card__frame">
+<div class="case-selection-card__media" style="--card-ratio: 4 / 5;">
+<img alt="Modern service website direction preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIWxXZqNsJ3oGGKW0Ie24WCGJhPH_aeJ-TbLzBlYvDVOEOOIyhN2z3UDyVjRKyYP7xwaGj9z9wChfPo5o4p8MbDzGNNgkZHtwO5qy9YEz4y7-VUwVCsbRR1FSHgK1nVDLTIXz45ecB8G56ZPXD-fx8w0TO-8qqodQHRhlh-Svjg7Vdg4a_lhe7VN5Uy2Q8qh8agcWLzttCC_sLo5fS7yoZmnzuD3q1-TVf7OPOpIYwMAdbFKQyGA5n69I3oLCGcwXMbMqAcJMwMpU"/>
+</div>
+</div>
+<div class="case-selection-card__meta">
+<span class="case-selection-card__eyebrow">Modern Service</span>
+<span class="case-selection-card__title">Clean, precise, and credibility-led</span>
+<span class="case-selection-card__cta">Explore this style</span>
+</div>
+</a>
+
+</div>
+</section>
+
+<section class="section-shell brand-story-shell" id="story">
+<div aria-hidden="true" class="brand-story-backdrop">
+<div class="brand-story-accent"></div>
+<div class="brand-story-orb brand-story-orb-1"></div>
+<div class="brand-story-orb brand-story-orb-2"></div>
+<div class="brand-story-orb brand-story-orb-3"></div>
+</div>
+<div class="section-grid">
+<div class="brand-story-grid">
+<div class="brand-story-panel reveal px-8 py-10 md:px-12 md:py-14">
+<div class="space-y-8">
+<div class="brand-story-tag">Kyiv, Ukraine -&gt; Toronto, Canada</div>
+<h2 class="brand-story-title font-headline">Gushka<br/><span>Wool</span></h2>
+<div class="brand-story-copy">
+<p>
+                        Rooted in the Carpathian mountains, Gushka revives centuries-old weaving traditions to create tactile, heavy-weight wool pieces. Every item is hand-loomed by artisans who have passed the craft down through generations.
+                    </p>
+<p>
+                        Uncompromised warmth, designed to anchor modern Canadian interiors with the raw, earthy texture of Ukrainian heritage.
+                    </p>
+</div>
+<a class="brand-story-link" href="#contact">
+                        Explore Collection
+                        <span aria-hidden="true">↗</span>
+</a>
+</div>
+</div>
+<div class="brand-story-gallery reveal" style="--reveal-delay: 90ms;">
+<div class="brand-story-media aspect-[4/5]">
+<img alt="Close-up of a cream woven wool blanket draped over a minimal chair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP-V29zDOrUbHwTXbIquHq0av-ukcpEKmAdaBRaolIIZ-g1vMwLk_F8bQkFJfBsb_pS8zGnFgroVv6glQT_jHJpVFV1A-paFRkxKsPFgYFZoBq4FqaL_36I4OHc0aPWRfIzcDvf15SU8TfC3W2sfe7-2_icFd6ylUaXCSpCq0aJkdhi5EjDja37w-t51Boe0vjfFYHL28j32Z0aT1PNpXCrHnKlSXV62JeV9BUwJsWn268UKeoU2Odec6cV7E7OitANzeLI0ymQA"/>
+</div>
+<div class="brand-story-media brand-story-media-offset aspect-square">
+<img alt="Hands weaving raw sheep wool on a traditional loom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1Ka1JGnk-wMINkWwstQNOeQGtGHdeOKISN-63a6PnNIk_Y_qzwXtZsaczsqylMSFAWBbryCMgXZrZnQK4ZgG3HBExKqdb9BJbndhfIN5uuH1FNCsomULV0V-EbfwPQCrBOdRxmYgTqzBPEJ99LdGgS84iKn7Jq2OPqO6_-61Sc--14bj75d8a6umAfOO4dSZhFNIU9NaiJR6978QqZNFMZRjbXGcReSkoEKKBrVpqW7313VJ__xenxB8GcDST_0xTaxig3_6H4A"/>
+</div>
+<div class="brand-story-media aspect-[16/9]">
+<img alt="Contemporary living room anchored by a textured Ukrainian wool rug" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD33zxeGEfMeZbXalRCL86MvUHTMZCiDZpzBhW95gYepi_axsqY_QNVvEWZptmuWp-rawT-ODKiQNp80fCPdfQEjDAeo7T8ycmONegUYGN-lZZQse63oNdaHrPE7f7Mq5b_QFUAb-TFhXi5nB_LdvhrfhmJ8P1HhxMxTse56CSFPBm3uzyjZ2QWoakqMhnEoojvKXdPIJCFb2k4zeD-Egdr3IzmoevTFseM0uWa284zyY9dWKFElymJ1jIHZyfWXxxvm2EyeEtFNg"/>
+</div>
+<div class="brand-story-media brand-story-media-tall aspect-[3/4]">
+<img alt="Folded wool blankets in soft cream and stone tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSP0PCskeocuQmkkV1qVqrn5AH-KE1X-7nweWb1Pz1M-Z1j82xrqhcGrr6Gj7_TlE_2tZVpl3pkKoeGywonDM2EHPn0VASBaovXo7WCEmar-PmjPmFzZhDTrV-JTIb7-HsFZ1t_TZI8CA0aw9uDgPqMwEFH8G0EQ9vHqTt8PaA2eWR3CXmqDuHDVXk_Qul8qYMyxo4wjGjxscq9-2MtfUbvTD-7p5hHuUkuEvGYHBI2hSMqwyCMkBGL03cDzeYIIWKMi3ppTWv5g"/>
 </div>
 </div>
 </div>
 </div>
 </section>
 
-<section class="section-shell editorial-rule" id="example">
-<div class="section-grid grid items-start gap-16 lg:grid-cols-12 lg:gap-24">
-<div class="space-y-12 lg:col-span-5 reveal">
-<div class="space-y-5">
-<span class="eyebrow">Case Study</span>
-<h2 class="text-4xl font-normal leading-[1.12] tracking-[-0.02em] md:text-6xl">Example: Cake studio</h2>
-</div>
-<div class="space-y-6 text-base leading-[1.8] text-on-surface-variant md:text-lg">
-<p>From Instagram messages to a clear, structured site.</p>
-</div>
-<div class="ghost-card p-8 md:p-10">
-<ul class="space-y-4 text-base leading-[1.8] text-on-surface-variant">
-<li>Focused browsing</li>
-<li>Clear product choices</li>
-<li>Simple request flow</li>
-</ul>
-</div>
-<p class="max-w-md text-lg leading-[1.8] text-on-surface-variant">
-                        A small shift in structure - a big difference in how the business works.
-                    </p>
-</div>
-<div class="space-y-6 lg:col-span-7 reveal">
-<div class="soft-card overflow-hidden p-4">
-<div class="aspect-[16/11] overflow-hidden rounded-[1.5rem] bg-surface-muted">
-<img alt="Cake studio homepage direction" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnEXM2x-Y308PoL1Ikikplo26y1mym29w-0URQorNMxY8ZZOSafc1WtXJSNZr7yXrlSnRE8C6rSBvVOJsDwP2m0TXAyr5U55XOrX5WedxnKx7GmLXWhLWDOFQ_vHu49HOAQDVFtXcpA626B7stE5kEjH773eEPK1zWqtpN8sO3M6oHfr6eKffEzbdE8U0vrxSItCsDbXwhvtUs2VcOvNUXU2ChZ5pbtIzqHMKnerTwb8uHay4nxgyxI1anBQ-G5oRBy9E2wOX1wPY"/>
-</div>
-</div>
-<div class="grid gap-6 md:grid-cols-2">
-<div class="soft-card overflow-hidden p-4">
-<div class="aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-surface-muted">
-<img alt="Focused browsing layout" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUDscW-3bVnGv1tqAUuYNNgtoale7wRNKLijy70lpdAk9_h_uEDtQ_j3KVyHTLDeAPRaQhF2adfH_AmjBs-ssYrCowYPdKeeLh8wpRSSMnJTD35y_IgSgmfgBDCEDrFAAOT-DUqVmFa5fbsBZ2Yp9Sn3uRs0FU-AWuP_dgNPWauKc5HEB0MZ8VTLCvk1Cxt4xNlpQbeR7XS5gXvr-Oumy-ul0qG8WkPOfm-sV74WkhCnzxdA3w5iurq6bbBJMLx_8GQ8kyIuWGGjE"/>
-</div>
-</div>
-<div class="soft-card overflow-hidden p-4">
-<div class="aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-surface-muted">
-<img alt="Clear product presentation" class="image-tint h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIWxXZqNsJ3oGGKW0Ie24WCGJhPH_aeJ-TbLzBlYvDVOEOOIyhN2z3UDyVjRKyYP7xwaGj9z9wChfPo5o4p8MbDzGNNgkZHtwO5qy9YEz4y7-VUwVCsbRR1FSHgK1nVDLTIXz45ecB8G56ZPXD-fx8w0TO-8qqodQHRhlh-Svjg7Vdg4a_lhe7VN5Uy2Q8qh8agcWLzttCC_sLo5fS7yoZmnzuD3q1-TVf7OPOpIYwMAdbFKQyGA5n69I3oLCGcwXMbMqAcJMwMpU"/>
-</div>
-</div>
-</div>
-</div>
-</div>
+<section class="section-shell" id="pricing">
+    <div class="section-grid space-y-12">
+        <div class="mx-auto max-w-3xl space-y-5 text-center reveal">
+            <span class="eyebrow">Pricing</span>
+            <h2 class="font-headline text-4xl font-normal leading-[1.12] tracking-[-0.02em] md:text-6xl">Simple, flexible</h2>
+        </div>
+        <div class="pricing-grid reveal">
+            <!-- Card 1: Start simple -->
+            <div class="ghost-card pricing-card pricing-card-entry">
+                <div class="space-y-3">
+                    <p class="pricing-card-label">Easy entry</p>
+                    <h3 class="font-headline text-[2rem] font-normal leading-[1.12] tracking-[-0.02em]">Start simple</h3>
+                    <p class="pricing-price">From $900</p>
+                </div>
+                <p class="pricing-body">
+                    For businesses that already have something started — but need it to feel clear, structured, and ready.
+                </p>
+                <ul class="pricing-feature-list space-y-2.5">
+                    <li>— Refined one-page website</li>
+                    <li>— Clean structure + copy guidance</li>
+                    <li>— Mobile-ready</li>
+                    <li>— Fast turnaround</li>
+                </ul>
+                <a class="pill-link pricing-card-cta" href="#contact">Refine what I have</a>
+            </div>
+
+            <!-- Card 2: Build properly -->
+            <div class="ghost-card pricing-card pricing-card-primary">
+                <div class="space-y-3">
+                    <p class="pricing-card-label">Most common choice</p>
+                    <h3 class="font-headline text-[2rem] font-normal leading-[1.12] tracking-[-0.02em]">Build properly</h3>
+                    <p class="pricing-price">$1500 – $2500</p>
+                </div>
+                <p class="pricing-body">
+                    For businesses that want a complete, thoughtful website — designed to help people choose and reach out.
+                </p>
+                <ul class="pricing-feature-list space-y-2.5">
+                    <li>— Full website structure</li>
+                    <li>— Visual direction + design</li>
+                    <li>— Clear user flow</li>
+                    <li>— Built and ready to use</li>
+                </ul>
+                <a class="pill-link pricing-card-cta" href="#contact">Build it for me</a>
+            </div>
+
+            <!-- Card 3: Guided direction -->
+            <div class="ghost-card pricing-card pricing-card-support">
+                <div class="space-y-3">
+                    <p class="pricing-card-label">Flexible support</p>
+                    <h3 class="font-headline text-[2rem] font-normal leading-[1.12] tracking-[-0.02em]">Guided direction</h3>
+                    <p class="pricing-price">From $250 – $400</p>
+                </div>
+                <p class="pricing-body">
+                    For those who want to build themselves, but need clarity and direction.
+                </p>
+                <ul class="pricing-feature-list space-y-2.5">
+                    <li>— 1:1 consultation</li>
+                    <li>— Layout + structure guidance</li>
+                    <li>— Visual direction suggestions</li>
+                    <li>— Clear next steps</li>
+                </ul>
+                <a class="pill-link pricing-card-cta" href="#contact">Help me figure it out</a>
+            </div>
+        </div>
+    </div>
 </section>
 
-<section class="section-shell editorial-rule" id="pricing">
-<div class="section-grid space-y-12">
-<div class="max-w-3xl space-y-6 reveal">
-<span class="eyebrow">Pricing</span>
-<h2 class="text-4xl font-normal leading-[1.12] tracking-[-0.02em] md:text-6xl">Simple, flexible</h2>
-</div>
-<div class="grid gap-6 lg:grid-cols-2 reveal">
-<div class="ghost-card p-10 md:p-12">
-<div class="space-y-6">
-<div class="space-y-3">
-<h3 class="text-3xl font-normal leading-[1.2] tracking-[-0.015em]">Start simple</h3>
-<p class="text-xl leading-relaxed text-on-surface-variant">From $900</p>
-</div>
-<p class="max-w-xs text-base leading-[1.8] text-on-surface-variant">
-                        A clear one-page start for a business that needs a stronger presence.
-                    </p>
-</div>
-</div>
-</div>
-<div class="ghost-card p-10 md:p-12">
-<div class="space-y-6">
-<div class="space-y-3">
-<h3 class="text-3xl font-normal leading-[1.2] tracking-[-0.015em]">Build properly</h3>
-<p class="text-xl leading-relaxed text-on-surface-variant">$1500 - $2500</p>
-</div>
-<p class="max-w-xs text-base leading-[1.8] text-on-surface-variant">
-                        A more complete website with clearer structure, flow, and presentation.
-                    </p>
-</div>
-</div>
-</div>
-</section>
-
-<section class="section-shell editorial-rule bg-white text-on-surface" id="contact">
+<section class="editorial-rule bg-white px-6 pb-48 pt-24 text-on-surface md:px-12 md:pb-56 md:pt-28" id="contact">
 <div class="section-grid text-center">
-<div class="mx-auto max-w-3xl space-y-8 reveal">
+<div class="mx-auto max-w-3xl space-y-6 reveal">
 <span class="eyebrow">Final CTA</span>
-<h2 class="text-4xl font-normal leading-[1.1] tracking-[-0.02em] md:text-7xl">Have something in mind?</h2>
-<div class="pt-4">
-<a class="pill-link primary-link px-8 py-4" href="#top">Start a Project</a>
+<h2 class="font-headline text-4xl font-normal leading-[1.1] tracking-[-0.02em] md:text-7xl">Have something in mind?</h2>
+<p class="mx-auto max-w-2xl text-lg leading-[1.85] text-on-surface-variant">
+If your website feels unclear, outdated, or not quite right — we can fix that.
+</p>
+<div class="mx-auto max-w-2xl rounded-[1.75rem] border border-black/10 bg-white px-5 py-4 shadow-[0_16px_40px_rgba(28,28,28,0.03)]">
+<label class="sr-only" for="prefooter-message">Your message</label>
+<textarea class="min-h-[140px] w-full resize-none border-0 bg-transparent p-0 text-base leading-[1.85] text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-0" id="prefooter-message"></textarea>
+</div>
+<div class="space-y-3 pt-2">
+<a class="pill-link primary-link px-8 py-4" href="#contact">Start a Project</a>
 </div>
 </div>
 </div>
@@ -485,9 +1339,8 @@
 </main>
 
 <footer class="border-t border-[rgba(28,28,28,0.18)]">
-<div class="h-24 bg-accent md:h-32"></div>
-<div class="bg-primary px-6 py-12 text-white md:px-12 md:py-16">
-<div class="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-end md:justify-between">
+<div class="bg-primary py-24 text-white md:py-32">
+<div class="mx-auto flex max-w-7xl flex-col gap-8 px-6 md:flex-row md:items-end md:justify-between md:px-12">
 <div class="space-y-3">
 <div class="text-2xl font-headline font-normal tracking-[-0.01em]">Two Swans.</div>
 <p class="max-w-md text-sm leading-relaxed text-white/70">
@@ -502,17 +1355,97 @@
 </footer>
 
 <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("is-visible");
-                }
-            });
-        }, {
-            threshold: 0.18
-        });
+        try {
+            document.body.classList.add("is-motion-ready");
 
-        document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.body.classList.add("is-loaded");
+                });
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: "0px 0px -8% 0px"
+            });
+
+            document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+            const heroProof = document.querySelector(".hero-proof");
+            const proofCards = [...document.querySelectorAll(".proof-card[data-parallax]")];
+            const signatureCurve = document.querySelector(".signature-curve");
+            let parallaxFrame = null;
+
+            const resetParallax = () => {
+                proofCards.forEach((card) => card.style.setProperty("--parallax-y", "0px"));
+                if (signatureCurve) {
+                    signatureCurve.style.setProperty("--curve-parallax", "0px");
+                }
+            };
+
+            const updateParallax = () => {
+                if (!heroProof || reducedMotion.matches) {
+                    resetParallax();
+                    parallaxFrame = null;
+                    return;
+                }
+
+                const rect = heroProof.getBoundingClientRect();
+                const viewportHeight = window.innerHeight || 1;
+                const progress = Math.max(-1, Math.min(1, (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight));
+
+                proofCards.forEach((card) => {
+                    const factor = parseFloat(card.dataset.parallax || "0");
+                    card.style.setProperty("--parallax-y", `${(-progress * factor * 8).toFixed(2)}px`);
+                });
+
+                if (signatureCurve) {
+                    signatureCurve.style.setProperty("--curve-parallax", `${(-progress * 6).toFixed(2)}px`);
+                }
+
+                parallaxFrame = null;
+            };
+
+            const requestParallax = () => {
+                if (parallaxFrame !== null) {
+                    return;
+                }
+
+                parallaxFrame = requestAnimationFrame(updateParallax);
+            };
+
+            const handleMotionPreference = () => {
+                if (reducedMotion.matches) {
+                    resetParallax();
+                    return;
+                }
+
+                requestParallax();
+            };
+
+            window.addEventListener("scroll", requestParallax, { passive: true });
+            window.addEventListener("resize", requestParallax);
+
+            if (typeof reducedMotion.addEventListener === "function") {
+                reducedMotion.addEventListener("change", handleMotionPreference);
+            } else {
+                reducedMotion.addListener(handleMotionPreference);
+            }
+
+            handleMotionPreference();
+        } catch (error) {
+            document.body.classList.add("is-loaded");
+            document.querySelectorAll(".reveal").forEach((element) => element.classList.add("is-visible"));
+            console.error("Motion init failed; falling back to visible content.", error);
+        }
     </script>
 </body>
 </html>
